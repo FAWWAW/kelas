@@ -3,223 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voting Struktur Organisasi</title>
+    <title>Voting Struktur Organisasi - Kelas Omega</title>
     <style>
+        :root {
+            --primary-blue: #A2DDF2;
+            --dark-blue: #2c3e50;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-color: #333;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #a7f3d0 100%);
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
         }
+
         .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 40px;
+            max-width: 800px;
             width: 100%;
         }
-        h2 {
+
+        h2.main-title {
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
+            color: var(--dark-blue);
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
+
+        .glamos-panel {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
+
         label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #34495e;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-blue);
+            font-size: 14px;
+            gap: 8px;
         }
+
+        label i {
+            color: #3498db;
+        }
+
         input[type="text"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
             box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
             font-size: 14px;
         }
+
         input[type="text"]:focus {
-            border-color: #3498db;
             outline: none;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+            border-color: #3498db;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
         }
-        button {
+
+        .candidate-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        h4.sub-title {
+            text-align: center;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        button.submit-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
-            padding: 12px;
-            background-color: #3498db;
+            padding: 15px;
+            background: linear-gradient(45deg, #3498db, #5dade2);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            gap: 10px;
+        }
+
+        button.submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        button.submit-btn:disabled {
+            background: #bdc3c7;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .status-container {
             margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        .info {
             text-align: center;
             font-size: 13px;
-            color: #7f8c8d;
-            margin-top: 15px;
         }
-        /* Pemisah visual untuk bagian pengisi data dan form kandidat */
-        hr {
-            border: 0;
-            height: 1px;
-            background: #e0e0e0;
-            margin: 25px 0;
+
+        .status-msg {
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status-success {
+            display: block;
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .status-error {
+            display: block;
+            background-color: rgba(231, 76, 60, 0.15);
+            color: #c0392b;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .candidate-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 25px;
+            }
         }
     </style>
+    <!-- Add FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
-        <h2>🗳️ Form Voting Organisasi</h2>
+        <h2 class="main-title">
+            <i class="fas fa-vote-yea"></i> Form Voting Organisasi
+        </h2>
         <form id="voteForm">
             
-            <div class="form-group">
-                <label for="nama_pemilih">Nama Anda (Pemilih):</label>
-                <input type="text" id="nama_pemilih" placeholder="Masukkan nama Anda..." required>
+            <div class="glamos-panel form-group">
+                <label for="nama_pemilih">
+                    <i class="fas fa-user-check"></i> Nama Anda (Pemilih):
+                </label>
+                <input type="text" id="nama_pemilih" placeholder="Masukkan nama lengkap Anda..." required>
             </div>
 
-            <hr>
-            <h4 style="text-align: center; color: #2c3e50; margin-bottom: 15px;">Ketikkan Nama Kandidat Pilihan Anda</h4>
+            <div class="glamos-panel">
+                <h4 class="sub-title">Ketikkan Nama Kandidat Pilihan Anda</h4>
+                <div class="candidate-grid">
+                    <div class="form-group">
+                        <label for="ketua"><i class="fas fa-crown"></i> 1. Ketua</label>
+                        <input type="text" id="ketua" placeholder="Nama calon ketua..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="wakil"><i class="fas fa-handshake"></i> 2. Wakil Ketua</label>
+                        <input type="text" id="wakil" placeholder="Nama calon wakil..." required>
+                    </div>
 
-            <div class="form-group">
-                <label for="ketua">1. Ketua</label>
-                <input type="text" id="ketua" placeholder="Nama calon ketua..." required>
-            </div>
-            
-            <div class="form-group">
-                <label for="wakil">2. Wakil Ketua</label>
-                <input type="text" id="wakil" placeholder="Nama calon wakil..." required>
+                    <div class="form-group">
+                        <label for="sekretaris"><i class="fas fa-pen-nib"></i> 3. Sekretaris</label>
+                        <input type="text" id="sekretaris" placeholder="Nama calon sekretaris..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bendahara"><i class="fas fa-money-bill-wave"></i> 4. Bendahara</label>
+                        <input type="text" id="bendahara" placeholder="Nama calon bendahara..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kerohanian"><i class="fas fa-pray"></i> 5. Sie Kerohanian</label>
+                        <input type="text" id="kerohanian" placeholder="Nama calon sie kerohanian..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kebersihan"><i class="fas fa-broom"></i> 6. Sie Kebersihan</label>
+                        <input type="text" id="kebersihan" placeholder="Nama calon sie kebersihan..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keamanan"><i class="fas fa-shield-alt"></i> 7. Sie Keamanan</label>
+                        <input type="text" id="keamanan" placeholder="Nama calon sie keamanan..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="olahraga"><i class="fas fa-running"></i> 8. Sie Olahraga</label>
+                        <input type="text" id="olahraga" placeholder="Nama calon sie olahraga..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bakat_minat"><i class="fas fa-paint-brush"></i> 9. Sie Bakat Minat</label>
+                        <input type="text" id="bakat_minat" placeholder="Nama calon sie bakat..." required>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="sekretaris">3. Sekretaris</label>
-                <input type="text" id="sekretaris" placeholder="Nama calon sekretaris..." required>
-            </div>
-
-            <div class="form-group">
-                <label for="bendahara">4. Bendahara</label>
-                <input type="text" id="bendahara" placeholder="Nama calon bendahara..." required>
-            </div>
-
-            <div class="form-group">
-                <label for="kerohanian">5. Sie Kerohanian</label>
-                <input type="text" id="kerohanian" placeholder="Nama calon sie kerohanian..." required>
-            </div>
-
-            <div class="form-group">
-                <label for="kebersihan">6. Sie Kebersihan</label>
-                <input type="text" id="kebersihan" placeholder="Nama calon sie kebersihan..." required>
-            </div>
-
-            <div class="form-group">
-                <label for="keamanan">7. Sie Keamanan</label>
-                <input type="text" id="keamanan" placeholder="Nama calon sie keamanan..." required>
-            </div>
-
-            <div class="form-group">
-                <label for="olahraga">8. Sie Olahraga</label>
-                <input type="text" id="olahraga" placeholder="Nama calon sie olahraga..." required>
-            </div>
-
-            <div class="form-group">
-                <label for="bakat_minat">9. Sie Bakat Minat</label>
-                <input type="text" id="bakat_minat" placeholder="Nama calon sie bakat minat..." required>
-            </div>
-
-            <button type="submit" id="submitBtn">Kirim Hasil Vote</button>
+            <button type="submit" id="submitBtn" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Kirim Hasil Vote
+            </button>
         </form>
-        <p class="info" id="statusMessage">Pastikan semua data terisi dengan benar sebelum mengirim.</p>
+        
+        <div class="status-container">
+            <p id="defaultInfo">Pastikan semua data terisi dengan benar sebelum mengirim.</p>
+            <div id="successMsg" class="status-msg status-success">
+                <i class="fas fa-check-circle"></i> Berhasil! Suara Anda telah terkirim.
+            </div>
+            <div id="errorMsg" class="status-msg status-error">
+                <i class="fas fa-times-circle"></i> Gagal mengirim data. Periksa koneksi atau URL Webhook.
+            </div>
+        </div>
     </div>
 
     <script>
         document.getElementById('voteForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
+            e.preventDefault(); 
             
             const btn = document.getElementById('submitBtn');
-            const statusMsg = document.getElementById('statusMessage');
+            const defaultInfo = document.getElementById('defaultInfo');
+            const successMsg = document.getElementById('successMsg');
+            const errorMsg = document.getElementById('errorMsg');
             
-            // Ubah teks tombol saat proses pengiriman
-            btn.textContent = "Mengirim...";
+            // Reset status messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            defaultInfo.style.display = 'block';
+
+            // Loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
             btn.disabled = true;
 
-            // URL Webhook Discord Anda
             const webhookUrl = "https://discordapp.com/api/webhooks/1526584821990559826/lfqfl-JNJ9PIPDRZ6u5BvzkBPQmR45hJdf_2KB5YaGx7KKqZ5ybDmjBU5RPWeWSP4p4e";
 
-            // Mengambil nilai dari form
-            const namaPemilih = document.getElementById('nama_pemilih').value;
-            const ketua = document.getElementById('ketua').value;
-            const wakil = document.getElementById('wakil').value;
-            const sekretaris = document.getElementById('sekretaris').value;
-            const bendahara = document.getElementById('bendahara').value;
-            const kerohanian = document.getElementById('kerohanian').value;
-            const kebersihan = document.getElementById('kebersihan').value;
-            const keamanan = document.getElementById('keamanan').value;
-            const olahraga = document.getElementById('olahraga').value;
-            const bakatMinat = document.getElementById('bakat_minat').value;
-
-            // Format pesan menggunakan Embed (agar tampilannya rapi di Discord)
             const payload = {
                 embeds: [
                     {
                         title: "🗳️ Data Voting Baru!",
-                        description: `**Pemilih:** ${namaPemilih}`,
-                        color: 3447003, // Warna biru
+                        description: `**Pemilih:** ${document.getElementById('nama_pemilih').value}`,
+                        color: 3447003, 
                         fields: [
-                            { name: "Ketua", value: ketua, inline: true },
-                            { name: "Wakil", value: wakil, inline: true },
-                            { name: "Sekretaris", value: sekretaris, inline: true },
-                            { name: "Bendahara", value: bendahara, inline: true },
-                            { name: "Sie Kerohanian", value: kerohanian, inline: true },
-                            { name: "Sie Kebersihan", value: kebersihan, inline: true },
-                            { name: "Sie Keamanan", value: keamanan, inline: true },
-                            { name: "Sie Olahraga", value: olahraga, inline: true },
-                            { name: "Sie Bakat Minat", value: bakatMinat, inline: true }
+                            { name: "Ketua", value: document.getElementById('ketua').value, inline: true },
+                            { name: "Wakil", value: document.getElementById('wakil').value, inline: true },
+                            { name: "Sekretaris", value: document.getElementById('sekretaris').value, inline: true },
+                            { name: "Bendahara", value: document.getElementById('bendahara').value, inline: true },
+                            { name: "Sie Kerohanian", value: document.getElementById('kerohanian').value, inline: true },
+                            { name: "Sie Kebersihan", value: document.getElementById('kebersihan').value, inline: true },
+                            { name: "Sie Keamanan", value: document.getElementById('keamanan').value, inline: true },
+                            { name: "Sie Olahraga", value: document.getElementById('olahraga').value, inline: true },
+                            { name: "Sie Bakat Minat", value: document.getElementById('bakat_minat').value, inline: true }
                         ],
                         timestamp: new Date().toISOString()
                     }
                 ]
             };
 
-            // Proses mengirim ke Discord via API Fetch
             fetch(webhookUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             })
             .then(response => {
                 if (response.ok) {
-                    alert("Berhasil! Suara Anda telah terkirim.");
                     document.getElementById('voteForm').reset();
-                    statusMsg.textContent = "Suara berhasil direkam.";
-                    statusMsg.style.color = "#27ae60";
+                    defaultInfo.style.display = 'none';
+                    successMsg.style.display = 'block';
                 } else {
-                    alert("Gagal mengirim data. Periksa koneksi atau URL Webhook.");
-                    statusMsg.textContent = "Terjadi kesalahan saat mengirim.";
-                    statusMsg.style.color = "#e74c3c";
+                    defaultInfo.style.display = 'none';
+                    errorMsg.style.display = 'block';
                 }
             })
             .catch(error => {
-                alert("Terjadi kesalahan jaringan.");
+                defaultInfo.style.display = 'none';
+                errorMsg.style.display = 'block';
                 console.error('Error:', error);
             })
             .finally(() => {
-                // Kembalikan tombol seperti semula
-                btn.textContent = "Kirim Hasil Vote";
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Hasil Vote';
                 btn.disabled = false;
             });
         });
